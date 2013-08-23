@@ -65,7 +65,7 @@ Asteroids.Game = (function(Game){
 			this.bullets[i].update();
 		};
 
-		this.ship.update();
+		this.ship.update(this.screenBoundX, this.screenBoundY);
 		this.removeRoids();
 		this.removeBullets();
 	}

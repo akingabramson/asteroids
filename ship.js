@@ -10,19 +10,23 @@ Asteroids = (function(Asteroids){
 	Ship.prototype.bindKeys = function() {
 		var ship = this;
 		key('up', function(){
-			ship.speed +=1;
+			ship.speed +=.5;
 			ship.direction = ship.newDirection;
 		});
   	key('down', function(){ 
-  		ship.speed -=2;
+  		ship.speed -=1;
   		ship.direction = ship.newDirection;
   	});
-  	key('left', function(){ ship.newDirection += .1725;});
-  	key('right', function(){ ship.newDirection -= .1725;});
+  	key('left', function(){ ship.newDirection += .2;});
+  	key('right', function(){ ship.newDirection -= .2;});
 	}
 
-	Ship.prototype.update = function() {
+	Ship.prototype.update = function(screenBoundX, screenBoundY) {
 		Asteroids.MovingObject.prototype.update.call(this);
+
+		// to wrap around screen
+		this.xpos = Math.abs((this.xpos + screenBoundX)% screenBoundX);
+		this.ypos = Math.abs((this.ypos + screenBoundY)% screenBoundY);
 
 		this.headx = this.xpos + Math.cos(this.newDirection)*this.radius;
 		this.heady = this.ypos - Math.sin(this.newDirection)*this.radius;
