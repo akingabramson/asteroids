@@ -1,6 +1,6 @@
 Asteroids.Asteroid = (function(Asteroid){
-	function Asteroid(xpos, ypos, velocity){
-		Asteroids.MovingObject.call(this, xpos, ypos, velocity);
+	function Asteroid(xpos, ypos, speed, direction){
+		Asteroids.MovingObject.call(this, xpos, ypos, speed, direction);
 		this.radius = 3;
 	}
 
@@ -8,46 +8,66 @@ Asteroids.Asteroid = (function(Asteroid){
 
 	Asteroid.randomAsteroid = function(screenBoundx, screenBoundy) {
 
-		var velMagnifier = 3;
-		var screenCorner = Math.floor(Math.random()*4);
-		var xIsSet = false;
+		var positionsDirections = this.getStartPosition(screenBoundx, screenBoundy);
+		var xpos = positionsDirections[0], ypos = positionsDirections[1];
+		var direction = positionsDirections[2], xIsSet = positionsDirections[3];
 
-		var xpos, ypos, velx, vely;
+		if (xIsSet) {
+			ypos = Math.random()*screenBoundy;
+		} else {
+			xpos = Math.random()*screenBoundx;
+		}
+
+		var speed = Math.random()*3;
+		return new Asteroid(xpos, ypos, speed, direction);
+	}
+
+	Asteroid.getStartPosition = function(screenBoundx, screenBoundy) {
+		var xpos, ypos;
+		var xIsSet = false;
+		var direction = Math.random()*2*Math.PI;
+		var screenCorner = Math.floor(Math.random()*4);
+
 		switch(screenCorner) {
 			case 0:
 				xpos = 0;
-				velx = Math.random()*velMagnifier;
+
+				// if it's between 90 and 270 degrees
+				if (Math.PI/2 < direction && direction < 3*Math.PI/2) {
+					direction = Math.random()*Math.PI + Math.PI*3/2;
+					// direction needs to be going right
+				}
 				xIsSet = true;
 				break;
 			case 1:
 				xpos = screenBoundx;
-				velx = Math.random()*velMagnifier*-1
+
+				// if it's between 270 and 90
+				if (3*Math.PI/2 < direction || direction < Math.PI/2) {
+					direction = Math.random()*Math.PI + Math.PI/2;
+					// direction needs to be going left
+				}
 				xIsSet = true;
 				break;
 			case 2:
 				ypos = 0;
-				vely = Math.random()*velMagnifier
+				if (0 < direction && direction < Math.PI) {
+					direction = Math.random()*Math.PI + Math.PI;
+					// direction needs to be going down
+				}
 				break;
 			case 3:
 				ypos = screenBoundy;
-				vely = Math.random()*velMagnifier*-1
+				if (Math.PI < direction) {
+					direction = Math.random()*Math.PI;
+					// direction needs to be going up
+				}
 				break;
 			default:
-
 				alert("Whoops! Postions weren't assigned correctly");
 		}
 
-		var posNeg = Math.random() < .5 ? -1 : 1;
-		if (xIsSet) {
-			ypos = Math.random()*screenBoundy;
-			vely = Math.random()*3*posNeg;
-		} else {
-			xpos = Math.random()*screenBoundx;
-			velx = Math.random()*3*posNeg;
-		}
-
-		var velocity = {x: velx, y: vely}
-		return new Asteroid(xpos, ypos, velocity);
+		return [xpos, ypos, direction, xIsSet]
 	}
 
 	Asteroid.prototype.draw = function(ctx) {

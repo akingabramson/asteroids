@@ -9,5 +9,7 @@ $(function () {
 
   // `canvas.get(0)` unwraps the jQuery'd DOM element;
   var game = new Asteroids.Game(canvas.get(0).getContext("2d"), width, height);
-  game.start()
+  game.start();
+
+
 });
