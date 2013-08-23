@@ -8,9 +8,7 @@ Asteroids.Game = (function(Game){
 		this.bullets = [];
 		this.ship = new Asteroids.Ship(screenBoundX/2, screenBoundY/2, 0, Math.PI/2)
 
-		for (var i = 0; i < 10; i++){
-			this.asteroids.push(Asteroids.Asteroid.randomAsteroid(screenBoundX, screenBoundY));
-		}
+		this.score = 0;
 	}
 
 	Game.prototype.draw = function(){
@@ -19,14 +17,14 @@ Asteroids.Game = (function(Game){
 		for (var i = 0; i < astLen; i++) {
 			this.asteroids[i].draw(this.context);
 		}
-
 		this.ship.draw(this.context);
 
 		var bullLen = this.bullets.length
-
 		for (var j = 0; j < bullLen; j++) {
 			this.bullets[j].draw(this.context);
 		}
+
+		$("#score").html(this.score)
 	}
 
 	Game.prototype.start = function(){
@@ -36,11 +34,12 @@ Asteroids.Game = (function(Game){
 		this.intervalId = setInterval(function(){
 			game.update();
 			game.draw();
+
 			if (game.ship.isHit(game.asteroids)){
-			clearInterval(game.intervalId);
-			alert("Game Over");
+				clearInterval(game.intervalId);
+				alert("Game Over");
 			}
-		}, 20);
+		}, 32);
 	}
 
 	Game.prototype.bindkeys = function() {
@@ -54,6 +53,10 @@ Asteroids.Game = (function(Game){
 	}
 
 	Game.prototype.update = function(){
+		while(this.asteroids.length < 10) {
+			this.asteroids.push(Asteroids.Asteroid.randomAsteroid(this.screenBoundX, this.screenBoundY));
+		};
+
 		for (var i = 0; i < this.asteroids.length; i++){
 			this.asteroids[i].update();
 		};
@@ -83,7 +86,9 @@ Asteroids.Game = (function(Game){
 		var newBullets = []
 
 		for (var i = 0; i < this.bullets.length; i++){
-			if (!this.bullets[i].offScreen(this.screenBoundX, this.screenBoundY)){
+			var currentBullet = this.bullets[i]
+			if (!currentBullet.offScreen(this.screenBoundX, this.screenBoundY)&&
+				!currentBullet.hitAsteroid(this)){
 				newBullets.push(this.bullets[i]);
 			}
 		};

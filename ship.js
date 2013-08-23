@@ -1,17 +1,31 @@
 Asteroids = (function(Asteroids){
 	var Ship = Asteroids.Ship = function Ship(xpos, ypos, speed, direction) {
 		Asteroids.MovingObject.call(this, xpos, ypos, speed, direction);
-		this.radius = 40;	
+		this.radius = 20;
+		this.newDirection = this.direction*1
 	}
 
 	Ship.inherits(Asteroids.MovingObject);
 
 	Ship.prototype.bindKeys = function() {
 		var ship = this;
-		key('up', function(){ship.speed +=1 });
-  	key('down', function(){ ship.speed -=1 });
-  	key('left', function(){ ship.direction += .1745 });
-  	key('right', function(){ ship.direction -= .1745 });
+		key('up', function(){
+			ship.speed +=1;
+			ship.direction = ship.newDirection;
+		});
+  	key('down', function(){ 
+  		ship.speed -=2;
+  		ship.direction = ship.newDirection;
+  	});
+  	key('left', function(){ ship.newDirection += .1725;});
+  	key('right', function(){ ship.newDirection -= .1725;});
+	}
+
+	Ship.prototype.update = function() {
+		Asteroids.MovingObject.prototype.update.call(this);
+
+		this.headx = this.xpos + Math.cos(this.newDirection)*this.radius;
+		this.heady = this.ypos - Math.sin(this.newDirection)*this.radius;
 	}
 
 	Ship.prototype.draw = function(context) {	
@@ -23,13 +37,14 @@ Asteroids = (function(Asteroids){
 
 		 // give the (x,y) coordinates
 		var d120 = 2*Math.PI/3;
+		var currentDirection = this.newDirection
 
-		var pos1y = Math.sin(this.direction)*this.radius*-1;
-		var pos1x = Math.cos(this.direction)*this.radius;
-		var pos2y = Math.sin(this.direction-d120)*this.radius*-1;
-		var pos2x = Math.cos(this.direction-d120)*this.radius;
-		var pos3y = Math.sin(this.direction-2*d120)*this.radius*-1;
-		var pos3x = Math.cos(this.direction-2*d120)*this.radius;
+		var pos1y = Math.sin(currentDirection)*this.radius*-1;
+		var pos1x = Math.cos(currentDirection)*this.radius;
+		var pos2y = Math.sin(currentDirection-d120)*this.radius*-1;
+		var pos2x = Math.cos(currentDirection-d120)*this.radius;
+		var pos3y = Math.sin(currentDirection-2*d120)*this.radius*-1;
+		var pos3x = Math.cos(currentDirection-2*d120)*this.radius;
 
 		context.moveTo(this.xpos + pos1x, this.ypos + pos1y);
 		context.lineTo(this.xpos + pos2x, this.ypos + pos2y);
@@ -40,6 +55,7 @@ Asteroids = (function(Asteroids){
 		context.stroke();
 		context.closePath();
 
+		// fill head
 		context.fillStyle = "black";
     context.beginPath();
     context.arc(
@@ -52,8 +68,6 @@ Asteroids = (function(Asteroids){
     );
     context.closePath();
     context.fill();
-		//x, y, width, height
-		// ctx.fillRect(this.xpos-this.radius/2,this.ypos-this.radius/2,this.radius,this.radius);
 
 	}
 
@@ -72,7 +86,7 @@ Asteroids = (function(Asteroids){
 
 		var yDirection, xDirection;
 
-		var bullet = new Asteroids.Bullet(this.xpos+topAdjustment, this.ypos+topAdjustment, velocity);
+		var bullet = new Asteroids.Bullet(this.headx, this.heady, this.speed+7, this.newDirection*1);
 		return bullet
 	}
 

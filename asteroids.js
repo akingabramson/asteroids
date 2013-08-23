@@ -15,8 +15,6 @@ Asteroids.MovingObject = (function(MovingObject){
 	MovingObject.prototype.update = function(){
 		this.xpos += this.speed*Math.cos(this.direction);
 		this.ypos -= this.speed*Math.sin(this.direction);
-		this.headx = this.xpos + Math.cos(this.direction)*this.radius;
-		this.heady = this.ypos - Math.sin(this.direction)*this.radius;
 	}
 
 	MovingObject.prototype.offScreen = function(screenBoundx, screenBoundy){		

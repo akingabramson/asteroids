@@ -1,7 +1,7 @@
 Asteroids.Asteroid = (function(Asteroid){
 	function Asteroid(xpos, ypos, speed, direction){
 		Asteroids.MovingObject.call(this, xpos, ypos, speed, direction);
-		this.radius = 3;
+		this.radius = 10;
 	}
 
 	Asteroid.inherits(Asteroids.MovingObject);

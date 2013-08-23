@@ -1,6 +1,6 @@
 Asteroids = (function(Asteroids){
 	var Bullet = Asteroids.Bullet = function Bullet(xpos, ypos, speed, direction) {
-		Asteroids.MovingObject.call(this, xpos, ypos, velocity);
+		Asteroids.MovingObject.call(this, xpos, ypos, speed, direction);
 		this.radius = 3;
 	};
 
@@ -19,8 +19,29 @@ Asteroids = (function(Asteroids){
     );
     ctx.closePath();
     ctx.fill();
-    console.log("yay")
+
 	}
+
+  Bullet.prototype.hitAsteroid = function(game){
+    var astLen = game.asteroids.length;
+    var astHit = false
+
+    for (var i = 0; i < astLen; i++) {
+      var currentAst = game.asteroids[i];
+      if (!!currentAst && this.collision(currentAst)) {
+        game.asteroids.splice(i,1);
+        this.explode(game);
+        console.log(game.score)
+        astHit = true;
+      }
+    }
+
+    return astHit
+  }
+
+  Bullet.prototype.explode = function(game) {
+    game.score += 1;
+  }
 
 
 
