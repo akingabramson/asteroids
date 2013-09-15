@@ -24,7 +24,18 @@ Asteroids.Game = (function(Game){
 			this.bullets[j].draw(this.context);
 		}
 
-		$("#score").html(this.score)
+		this.drawImage();
+
+		$("#score").html(this.score);
+	}
+
+	Game.prototype.drawImage = function(){
+		if (this.img) {
+			this.img = new Image();
+			img.onload = function () {
+				this.context
+			}
+		}
 	}
 
 	Game.prototype.start = function(){
