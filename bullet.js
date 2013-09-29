@@ -31,7 +31,6 @@ Asteroids = (function(Asteroids){
       if (!!currentAst && this.collision(currentAst)) {
         game.asteroids.splice(i,1);
         this.explode(game);
-        console.log(game.score)
         astHit = true;
       }
     }

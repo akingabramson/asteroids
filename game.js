@@ -9,11 +9,12 @@ Asteroids.Game = (function(Game){
 		this.ship = new Asteroids.Ship(screenBoundX/2, screenBoundY/2, 0, Math.PI/2)
 
 		this.score = 0;
+		this.bulletsFired = 0;
 	}
 
 	Game.prototype.draw = function(){
-		var astLen = this.asteroids.length
 		this.context.clearRect(0, 0, this.screenBoundX, this.screenBoundY);
+		var astLen = this.asteroids.length;
 		for (var i = 0; i < astLen; i++) {
 			this.asteroids[i].draw(this.context);
 		}
@@ -27,6 +28,13 @@ Asteroids.Game = (function(Game){
 		this.drawImage();
 
 		$("#score").html(this.score);
+		var accuracyPercentage = 100*this.score/this.bulletsFired;
+		if (isNaN(accuracyPercentage)){
+			accuracyPercentage = 0.000
+		}
+		accuracyPercentage = accuracyPercentage.toString().slice(0, 4) + "%";
+		$("#accuracy").html(accuracyPercentage);
+		
 	}
 
 	Game.prototype.drawImage = function(){
@@ -59,6 +67,7 @@ Asteroids.Game = (function(Game){
 		var game = this;
 		key('space', function() {
   		game.bullets.push(game.ship.fireBullet());
+  		game.bulletsFired += 1;
   	});
 
 	}
