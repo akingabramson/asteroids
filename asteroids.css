@@ -1,3 +1,26 @@
 body {
-	
+	background: url('background.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+	font-family: 'Rationale', sans-serif;
+	color: white;
+	text-align: center;
+	opacity: 0.74;
+
+}
+
+#game-canvas{
+	border: 3px inset white;
+}
+
+#info-container {
+	color: #00FF00;
+	background-color: black;
+}
+
+#title {
+	font-size: 80px;
 }

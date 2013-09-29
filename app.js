@@ -1,8 +1,8 @@
 
 $(function () {
-	var width = 500;
-	var height = 500;
-  var canvas = $("<canvas width='" + width + 
+	var width = 800;
+	var height = 400;
+  var canvas = $("<canvas id='game-canvas' width='" + width + 
                  "' height='" + height + "'></canvas>");
   $('#game').append(canvas);
 

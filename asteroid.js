@@ -18,7 +18,7 @@ Asteroids.Asteroid = (function(Asteroid){
 			xpos = Math.random()*screenBoundx;
 		}
 
-		var speed = Math.random()*3;
+		var speed = Math.random()*3+3;
 		return new Asteroid(xpos, ypos, speed, direction);
 	}
 
@@ -71,7 +71,7 @@ Asteroids.Asteroid = (function(Asteroid){
 	}
 
 	Asteroid.prototype.draw = function(ctx) {
-		ctx.fillStyle = "black";
+		ctx.fillStyle = "white";
     ctx.beginPath();
     ctx.arc(
       this.xpos,

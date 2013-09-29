@@ -33,8 +33,8 @@ Asteroids = (function(Asteroids){
 	}
 
 	Ship.prototype.draw = function(context) {	
-		context.fillStyle   = '#00f';
-		context.strokeStyle = '#f00';
+		context.fillStyle   = '00FF33';
+		context.strokeStyle = '00CC33';
 		context.lineWidth   = 1;
 
 		context.beginPath();
@@ -60,7 +60,7 @@ Asteroids = (function(Asteroids){
 		context.closePath();
 
 		// fill head
-		context.fillStyle = "black";
+		context.fillStyle = "grey";
     context.beginPath();
     context.arc(
       this.headx,

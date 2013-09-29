@@ -30,7 +30,7 @@ Asteroids.Game = (function(Game){
 		$("#score").html(this.score);
 		var accuracyPercentage = 100*this.score/this.bulletsFired;
 		if (isNaN(accuracyPercentage)){
-			accuracyPercentage = 0.000
+			accuracyPercentage = 0.000;
 		}
 		accuracyPercentage = accuracyPercentage.toString().slice(0, 4) + "%";
 		$("#accuracy").html(accuracyPercentage);

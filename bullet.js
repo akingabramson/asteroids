@@ -7,7 +7,7 @@ Asteroids = (function(Asteroids){
 	Bullet.inherits(Asteroids.MovingObject);
 
 	Bullet.prototype.draw = function(ctx) {
-		ctx.fillStyle = "black";
+		ctx.fillStyle = "grey";
     ctx.beginPath();
     ctx.arc(
       this.xpos,
