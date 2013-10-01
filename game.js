@@ -58,7 +58,7 @@ Asteroids.Game = (function(Game){
 
 			if (game.ship.isHit(game.asteroids)){
 				clearInterval(game.intervalId);
-				game.canvas.css("background-color", "red");
+				game.canvas.css("background-color", "#990000");
 			}
 		}, 32);
 	}
