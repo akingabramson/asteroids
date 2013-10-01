@@ -1,8 +1,9 @@
 Asteroids.Game = (function(Game){
-	function Game(context, screenBoundX, screenBoundY){
-		this.context = context;
+	function Game(canvas, screenBoundX, screenBoundY){
+		this.context = canvas.get(0).getContext("2d");
 		this.screenBoundX = screenBoundX;
 		this.screenBoundY = screenBoundY;
+		this.canvas = canvas;
 
 		this.asteroids = [];
 		this.bullets = [];
@@ -53,10 +54,11 @@ Asteroids.Game = (function(Game){
 		this.intervalId = setInterval(function(){
 			game.update();
 			game.draw();
+			game.canvas.css("background-color", "")
 
 			if (game.ship.isHit(game.asteroids)){
 				clearInterval(game.intervalId);
-				alert("Game Over");
+				game.canvas.css("background-color", "red");
 			}
 		}, 32);
 	}

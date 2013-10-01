@@ -5,12 +5,17 @@ $(function () {
   var canvas = $("<canvas id='game-canvas' width='" + width + 
                  "' height='" + height + "'></canvas>");
   $('#game').append(canvas);
-
+	
+	game = new Asteroids.Game(canvas, width, height);
   // `canvas.get(0)` unwraps the jQuery'd DOM element;
-  var game = new Asteroids.Game(canvas.get(0).getContext("2d"), width, height);
 
-  
-  game.start();
 
+  $("html").keyup(function(e){
+  	if (e.keyCode == '13') {
+  		clearInterval(game.intervalId);
+  		game = new Asteroids.Game(canvas, width, height);
+  		game.start();
+  	}
+  });
 
 });
